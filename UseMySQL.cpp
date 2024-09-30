@@ -244,7 +244,7 @@ bool UseMySQL::connectMySQL()
 
 	if (base.open())
 	{
-		QMessageBox::information(nullptr, "Tip", "Successed to open database", QMessageBox::Yes);
+		//QMessageBox::information(nullptr, "Tip", "Successed to open database", QMessageBox::Yes);
 		return true;
 	}
 	else

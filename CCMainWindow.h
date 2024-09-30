@@ -3,6 +3,7 @@
 #include "BasicWindow.h"
 #include "ui_CCMainWindow.h"
 #include "SkinWindow.h"
+#include "User.h"
 
 class CCMainWindow : public BasicWindow
 {
@@ -48,5 +49,7 @@ private slots:
 private:
 	Ui::CCMainWindowClass ui;
 
-	QString account;			//账号
+	QString account;			//账号 todo可以用User取代吗？
+
+
 };

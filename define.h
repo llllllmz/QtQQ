@@ -44,3 +44,21 @@ enum ButtonType
 	MIN_MAX_CLOSE_BUTTON,    //最小化、最大化及关闭按钮
 	CLOSE_BUTTON             //仅有关闭按钮
 };
+
+
+enum EventType
+{
+	ET_LoginRequest,    //登录请求事件
+	ET_LoginResponse,   //登录响应事件
+	ET_LogoutRequest,   //注销请求事件
+	ET_LogoutResponse,  //注销响应事件
+	ET_HeartBeat,       //心跳事件
+	ET_Other
+};
+
+#include <cstring>
+#define   cHeaderMagic       "QTQQ"
+#define   lHeaderMagic       strlen(cHeaderMagic)
+#define   lHeaderEventType   sizeof(int16_t)
+#define   lHeaderLen         sizeof(int32_t)
+#define   lHeaderTotal       (lHeaderMagic + lHeaderEventType + lHeaderLen)

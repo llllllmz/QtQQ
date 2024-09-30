@@ -85,6 +85,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="CCMainWindow.cpp" />
+    <ClCompile Include="ChatSocket.cpp" />
     <ClCompile Include="CommonUtils.cpp" />
     <ClCompile Include="ConfigIni.cpp" />
     <ClCompile Include="ContactItem.cpp" />
@@ -95,6 +96,7 @@
     <ClCompile Include="MsgTextEdit.cpp" />
     <ClCompile Include="NotifyManager.cpp" />
     <ClCompile Include="QClickLabel.cpp" />
+    <ClCompile Include="QQTcpSocket.cpp" />
     <ClCompile Include="RecvFile.cpp" />
     <ClCompile Include="RootContactItem.cpp" />
     <ClCompile Include="SendFile.cpp" />
@@ -105,6 +107,7 @@
     <ClCompile Include="TalkWindowShell.cpp" />
     <ClCompile Include="TitleBar.cpp" />
     <ClCompile Include="UseMySQL.cpp" />
+    <ClCompile Include="User.cpp" />
     <ClCompile Include="UserLogin.cpp" />
     <ClCompile Include="WindowManager.cpp" />
     <QtRcc Include="res.qrc" />
@@ -130,6 +133,8 @@
     <QtMoc Include="TitleBar.h" />
   </ItemGroup>
   <ItemGroup>
+    <QtMoc Include="User.h" />
+    <QtMoc Include="QQTcpSocket.h" />
     <QtMoc Include="RecvFile.h" />
     <QtMoc Include="SendFile.h" />
     <QtMoc Include="MsgPage.h" />
@@ -146,6 +151,7 @@
     <QtMoc Include="QClickLabel.h" />
     <QtMoc Include="SkinWindow.h" />
     <QtMoc Include="CCMainWindow.h" />
+    <QtMoc Include="ChatSocket.h" />
     <ClInclude Include="CommonUtils.h" />
     <ClInclude Include="ConfigIni.h" />
     <QtMoc Include="ContactItem.h" />

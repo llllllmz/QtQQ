@@ -109,6 +109,15 @@
     <ClCompile Include="RecvFile.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="QQTcpSocket.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ChatSocket.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="User.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="BasicWindow.h">
@@ -172,6 +181,15 @@
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="RecvFile.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="QQTcpSocket.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="ChatSocket.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="User.h">
       <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>

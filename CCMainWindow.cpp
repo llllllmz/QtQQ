@@ -15,6 +15,8 @@
 
 QString LoginUserAccount;     //µÇÂ¼ÓÃ»§ÕËºÅ
 
+User* CCMainWindow::user = nullptr;
+
 CCMainWindow::CCMainWindow(const QString& account, QWidget *parent)
 	: BasicWindow(parent), account(account)
 {
