@@ -66,9 +66,9 @@ void TalkWindow::initConnect()
 
 void TalkWindow::initTalkWindow()
 {
-	if (QString::number(talkId).length() <= GROUP_ID_LENGTH)
-		initGroupTalk();
-	else
+	//if (QString::number(talkId).length() <= GROUP_ID_LENGTH)
+	//	initGroupTalk();
+	//else
 		initSingleTalk();
 }
 

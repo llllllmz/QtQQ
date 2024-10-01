@@ -250,9 +250,9 @@ void TalkWindowShell::sendMsgToServer(QJsonValue data)
 	QJsonObject msgObj;     //消息对象
 
 	//聊天窗口类型
-	if (talkID.length() <= GROUP_ID_LENGTH)                      //群聊
-		msgObj.insert(TYPE, TYPE_GROUP);
-	else                                                         //单聊
+	//if (talkID.length() <= GROUP_ID_LENGTH)                      //群聊
+	//	msgObj.insert(TYPE, TYPE_GROUP);
+	//else                                                         //单聊
 		msgObj.insert(TYPE, TYPE_SINGLE);
 
 	//发送者/接收者（群号/员工ID）

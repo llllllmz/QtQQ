@@ -52,6 +52,10 @@ enum EventType
 	ET_LoginResponse,   //登录响应事件
 	ET_LogoutRequest,   //注销请求事件
 	ET_LogoutResponse,  //注销响应事件
+	ET_UserGroupRequest,//获取好友分组事件
+	ET_UserGroupResponse,//获取好友分组响应事件
+	ET_UserListRequest,//获取好友列表事件
+	ET_UserListResponse,//获取好友列表响应事件
 	ET_HeartBeat,       //心跳事件
 	ET_Other
 };

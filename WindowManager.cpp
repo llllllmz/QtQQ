@@ -19,7 +19,7 @@ WindowManager* WindowManager::instance()
 	return theInstance();
 }
 
-void WindowManager::addNewTalkWindow(const int id)
+void WindowManager::addNewTalkWindow(const int id)//todo 单聊还是私聊，加一个函数参数
 {
 	if (!talkWindowShell)       //talkWindowShell == nullptr
 	{
@@ -42,13 +42,13 @@ void WindowManager::addNewTalkWindow(const int id)
 		QString itemMsg;
 		QString windowName;
 		QString headPath;
-		if (QString::number(id).length() <= GROUP_ID_LENGTH)     //群聊
-		{
-			itemMsg = UseMySQL::instance()->getGroupName(id);
-			windowName = itemMsg;               
-			headPath = UseMySQL::instance()->getGroupHeadPixmap(id);     //头像
-		}
-		else              //单聊
+		//if (QString::number(id).length() <= GROUP_ID_LENGTH)     //群聊
+		//{
+		//	itemMsg = UseMySQL::instance()->getGroupName(id);
+		//	windowName = itemMsg;               
+		//	headPath = UseMySQL::instance()->getGroupHeadPixmap(id);     //头像
+		//}
+		//else              //单聊
 		{
 			QString account = QString::number(id);
 			itemMsg = UseMySQL::instance()->getUserName(account);

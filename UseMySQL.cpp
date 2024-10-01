@@ -209,9 +209,9 @@ QList<int> UseMySQL::getUserList()
 		model.setQuery("SELECT employeeID, picture FROM tab_employees WHERE status = 1", base);
 	else
 	{
-		if (id.length() <= GROUP_ID_LENGTH)    //其它群聊
-			model.setQuery(QString("SELECT employeeID, picture FROM tab_employees WHERE status = 1 AND departmentID = %1").arg(id), base);
-		else                     //单聊
+		//if (id.length() <= GROUP_ID_LENGTH)    //其它群聊
+		//	model.setQuery(QString("SELECT employeeID, picture FROM tab_employees WHERE status = 1 AND departmentID = %1").arg(id), base);
+		//else                     //单聊
 			model.setQuery(QString("SELECT employeeID, picture FROM tab_employees WHERE status = 1 AND employeeID = %1").arg(id), base);
 	}
 

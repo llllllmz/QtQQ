@@ -18,6 +18,21 @@ User::~User()
 {
 }
 
+User::User(const User& other)
+	: QObject(other.parent()), m_id(other.m_id), m_username(other.m_username), m_password(other.m_password), m_signname(other.m_signname)
+{}
+
+User& User::operator=(const User& other)
+{
+	if (this != &other) {
+		m_id = other.m_id;
+		m_username = other.m_username;
+		m_password = other.m_password;
+		m_signname = other.m_signname;
+	}
+	return *this;
+}
+
 void User::setId(int id)
 {
 	if (m_id == id)
@@ -68,4 +83,24 @@ QString User::getPassword() const
 QString User::getSignName() const
 {
 	return m_signname;
+}
+// JSON 序列化方法
+QJsonObject User::to_json() const
+{
+	return QJsonObject{
+		{"id", m_id},
+		{"username", m_username},
+		{"password", m_password},
+		{"signname", m_signname}
+	};
+}
+
+// JSON 反序列化方法
+bool User::from_json(const QJsonObject& j)
+{
+	m_id = j.value("id").toInt();
+	m_username = j.value("username").toString();
+	m_password = j.value("password").toString();
+	m_signname = j.value("signname").toString();
+	return true;
 }

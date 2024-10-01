@@ -92,6 +92,8 @@
     <ClCompile Include="CustomMenu.cpp" />
     <ClCompile Include="EmotionLabel.cpp" />
     <ClCompile Include="EmotionWindow.cpp" />
+    <ClCompile Include="Friendship.cpp" />
+    <ClCompile Include="FriendshipDTO.cpp" />
     <ClCompile Include="MsgPage.cpp" />
     <ClCompile Include="MsgTextEdit.cpp" />
     <ClCompile Include="NotifyManager.cpp" />
@@ -108,6 +110,7 @@
     <ClCompile Include="TitleBar.cpp" />
     <ClCompile Include="UseMySQL.cpp" />
     <ClCompile Include="User.cpp" />
+    <ClCompile Include="UserGroup.cpp" />
     <ClCompile Include="UserLogin.cpp" />
     <ClCompile Include="WindowManager.cpp" />
     <QtRcc Include="res.qrc" />
@@ -133,8 +136,11 @@
     <QtMoc Include="TitleBar.h" />
   </ItemGroup>
   <ItemGroup>
+    <QtMoc Include="UserGroup.h" />
     <QtMoc Include="User.h" />
-    <QtMoc Include="QQTcpSocket.h" />
+    <QtMoc Include="FriendshipDTO.h" />
+    <QtMoc Include="Friendship.h" />
+    <ClInclude Include="QQTcpSocket.h" />
     <QtMoc Include="RecvFile.h" />
     <QtMoc Include="SendFile.h" />
     <QtMoc Include="MsgPage.h" />

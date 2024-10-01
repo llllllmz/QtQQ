@@ -4,7 +4,10 @@
 #include "ui_CCMainWindow.h"
 #include "SkinWindow.h"
 #include "User.h"
-
+#include "UserGroup.h"
+#include "FriendshipDTO.h"
+#include <QTreeWidgetItem>
+#include "QMap"
 class CCMainWindow : public BasicWindow
 {
 	Q_OBJECT
@@ -46,10 +49,16 @@ private slots:
 
 	void onQuit();
 
+	void on_tcp_user_group_response(QMap<int, UserGroup*>);
+	void on_tcp_friend_ship_response(QList<FriendshipDTO*> friendships);
 private:
 	Ui::CCMainWindowClass ui;
 
 	QString account;			//账号 todo可以用User取代吗？
 
+public:
+	static User* user;
 
+	QMap<int, UserGroup*> m_userGroups;
+	QMap<int, QTreeWidgetItem*> m_treeWidgetItem;
 };

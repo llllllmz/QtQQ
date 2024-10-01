@@ -3,7 +3,11 @@
 #include <QtEndian>
 #include <QJsonParseError>
 #include <QJsonObject>
+#include <QJsonArray>
 #include "User.h"
+#include "UserGroup.h"
+#include "FriendshipDTO.h"
+
 Q_GLOBAL_STATIC(ChatSocket, theInstance);
 // 静态成员变量初始化
 ChatSocket *ChatSocket::m_instance = nullptr;
@@ -93,6 +97,7 @@ void ChatSocket::onError(QAbstractSocket::SocketError error)
 void ChatSocket::onReadyRead()
 {
 	qDebug() << "onReadyRead";
+
 	//emit readyRead();
 	//todo解析并发送相关信号
 	//todo先不考虑是粘包和解包问题
@@ -110,8 +115,8 @@ void ChatSocket::onReadyRead()
 
 		//eventType = qFromBigEndian<short>(eventType);
 		//length = qFromBigEndian<int>(length);//?为什么不用转换
-		//qDebug() << eventType;
-		//qDebug() << length;
+		qDebug() << eventType;
+		qDebug() << length;
 
 		if (tcpSocket->bytesAvailable() >= length + lHeaderTotal)
 		{
@@ -132,12 +137,15 @@ void ChatSocket::onReadyRead()
 			if (!jsonDoc.isObject()) {
 				qWarning() << "JSON document is not an object.";
 			}
-			QJsonObject obj = jsonDoc.object();
-
+			QJsonObject obj;
+			QJsonArray array;
+			QMap<int, UserGroup*> map;
+			QList<FriendshipDTO*> friendships;
 			switch (eventType)
 			{
 			case ET_LoginResponse:
 				// 解析 QByteArray
+				obj = jsonDoc.object();
 				if (obj["result"].toBool())
 				{
 					QJsonObject userObj = obj["user"].toObject();
@@ -154,6 +162,55 @@ void ChatSocket::onReadyRead()
 					emit login_response(false, reason,nullptr);
 				}
 				break;
+			case ET_UserGroupResponse:
+				obj = jsonDoc.object();
+				array = obj["groups"].toArray();
+
+				
+				// 遍历数组
+				for (const QJsonValue &value : array) {
+					if (value.isObject()) {
+						QJsonObject groupObj = value.toObject();
+						qDebug() << "Group ID:" << groupObj.value("userGroupId").toInt();
+						qDebug() << "Group Name:" << groupObj.value("groupName").toString();
+						// 创建 UserGroup 对象
+						UserGroup *group = new UserGroup;
+						group->from_json(groupObj); // 使用 from_json 方法填充对象
+
+						// 存储到 QMap 中
+						int groupId = groupObj.value("userGroupId").toInt();
+						map.insert(groupId, group);
+					}
+				}
+				emit user_group_response(map);
+			case ET_UserListResponse:
+				obj = jsonDoc.object();
+				array = obj["friendships"].toArray();
+				// 假设有一个 QJsonArray array 包含多个 QJsonValue 对象，每个对象代表一个 FriendshipDTO
+				
+
+				for (const QJsonValue &value : array) {
+					if (value.isObject()) {
+						QJsonObject dtoObj = value.toObject();
+
+						// 从 JSON 对象中提取 User 对象的信息
+						QJsonObject userObj = dtoObj.value("user").toObject();
+
+						//// 创建 User 对象
+						//User *user = new User;
+						//user->from_json(userObj); // 使用 from_json 方法填充 User 对象
+
+						// 创建 FriendshipDTO 对象
+						FriendshipDTO *friendshipDTO = new FriendshipDTO;
+						friendshipDTO->from_json(dtoObj); // 使用 from_json 方法填充 FriendshipDTO 对象
+						//friendshipDTO->setUser(*user); // 设置 FriendshipDTO 的 User 成员
+
+						//
+						friendships.append(friendshipDTO);
+					}
+				}
+				emit friend_ship_response(friendships);
+
 			default:
 				break;
 			}

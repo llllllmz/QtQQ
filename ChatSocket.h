@@ -8,6 +8,9 @@
 #include <QMutex>
 #include "define.h"
 #include "User.h"
+#include "UserGroup.h"
+#include "FriendshipDTO.h"
+#include <QMap>
 class ChatSocket : public QObject
 {
 	Q_OBJECT
@@ -30,7 +33,8 @@ signals:
 	void readyRead();
 
 	void login_response(bool,const QString&,User*);	//登录响应 todo 需要改成user类和bool类型
-
+	void user_group_response(QMap<int, UserGroup*>);
+	void friend_ship_response(QList<FriendshipDTO*>);
 private slots:
 	void onConnected();
 	void onDisconnected();

@@ -118,6 +118,15 @@
     <ClCompile Include="User.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="UserGroup.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="FriendshipDTO.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Friendship.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="BasicWindow.h">
@@ -183,13 +192,19 @@
     <QtMoc Include="RecvFile.h">
       <Filter>Header Files</Filter>
     </QtMoc>
-    <QtMoc Include="QQTcpSocket.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
     <QtMoc Include="ChatSocket.h">
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="User.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="UserGroup.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="FriendshipDTO.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="Friendship.h">
       <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>
@@ -236,6 +251,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="CustomProxyStyle.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="QQTcpSocket.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

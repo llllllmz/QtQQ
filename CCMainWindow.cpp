@@ -12,7 +12,7 @@
 #include "CustomProxyStyle.h"
 #include "SysTrayIcon.h"
 #include "WindowManager.h"
-
+#include "ChatSocket.h"
 QString LoginUserAccount;     //登录用户账号
 
 User* CCMainWindow::user = nullptr;
@@ -24,6 +24,10 @@ CCMainWindow::CCMainWindow(const QString& account, QWidget *parent)
 	setWindowFlags(windowFlags() | Qt::Tool | Qt::WindowStaysOnTopHint);      //不显示任务栏图标，窗口始终显示在最前面
 	init();
 	LoginUserAccount = account;
+
+	connect(ChatSocket::instance(), &ChatSocket::user_group_response, this, &CCMainWindow::on_tcp_user_group_response);
+	connect(ChatSocket::instance(), &ChatSocket::friend_ship_response, this, &CCMainWindow::on_tcp_friend_ship_response);
+	
 }
 
 CCMainWindow::~CCMainWindow()
@@ -40,6 +44,7 @@ void CCMainWindow::init()
 	initConnect();
 	initContact();
 	initSysTray();
+	ChatSocket::instance()->sendText(ET_UserGroupRequest, QByteArray());
 }
 
 void CCMainWindow::initButton()
@@ -386,4 +391,66 @@ void CCMainWindow::onQuit()
 		shell->close();
 	}
 	QApplication::quit();
+}
+
+void CCMainWindow::on_tcp_user_group_response(QMap<int, UserGroup*> userGroups)
+{
+	m_userGroups = userGroups;
+
+	for (auto it = userGroups.begin(); it != userGroups.end(); ++it)
+	{
+		//根项
+		QTreeWidgetItem* rootItem = new QTreeWidgetItem;
+		/*
+			使用Qt::UserRole存储特定数据，根项数据设为0
+			根据该值判断是根项或者子项
+		*/
+		m_treeWidgetItem.insert(it.key(), rootItem);
+
+		rootItem->setData(0, Qt::UserRole, 0);
+
+		RootContactItem* rootWidget = new RootContactItem(true, ui.treeWidget);
+		rootWidget->setText(it.value()->getGroupName());
+
+		ui.treeWidget->addTopLevelItem(rootItem);
+		ui.treeWidget->setItemWidget(rootItem, 0, rootWidget);
+	}
+	ChatSocket::instance()->sendText(ET_UserListRequest, QByteArray());
+}
+
+void CCMainWindow::on_tcp_friend_ship_response(QList<FriendshipDTO*> friendships)
+{
+	qDebug() << friendships.count();
+	// 遍历 userGroups 并构建树结构
+	for (FriendshipDTO* friendship : friendships) 
+	{
+		
+		QTreeWidgetItem* rootItem = m_treeWidgetItem.value(friendship->getUserGroupId());
+		
+		
+		int id = friendship->getUserId();
+
+		QTreeWidgetItem* childItem = new QTreeWidgetItem;
+		childItem->setData(0, Qt::UserRole, 1);          //子项UserRole角色数据为1
+		childItem->setData(0, Qt::UserRole + 1, id);     //子项保存群号
+
+		ContactItem* childWidget = new ContactItem(ui.treeWidget);
+
+		//设置群组头像
+		QString headPath = UseMySQL::instance()->getGroupHeadPixmap(id);
+		QPixmap head(headPath);
+		QPixmap head_mask(":/Resources/MainWindow/head_mask.png");
+		childWidget->setHeadPixmap(CommonUtils::getRoundedPixmap(head, head_mask, childWidget->getHeadLabelSize()));
+
+		//设置群组名称
+		QString username = friendship->getUser().getUsername();
+		childWidget->setUserName(username);
+
+		QString signname = friendship->getUser().getSignName();
+		childWidget->setSignName(signname);
+
+		//将子项添加到根项
+		rootItem->addChild(childItem);
+		ui.treeWidget->setItemWidget(childItem, 0, childWidget);
+	}
 }
